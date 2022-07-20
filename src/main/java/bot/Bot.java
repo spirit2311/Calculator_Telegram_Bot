@@ -144,6 +144,7 @@ public class Bot extends TelegramLongPollingBot {
                             .chatId(message.getChatId().toString())
                             .build()
             );
+            return;
         }
     }
 
