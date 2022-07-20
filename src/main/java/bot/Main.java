@@ -9,5 +9,6 @@ public class Main{
         Bot bot = new Bot();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
         telegramBotsApi.registerBot(bot);
+        System.out.println("App Running...");
     }
 }

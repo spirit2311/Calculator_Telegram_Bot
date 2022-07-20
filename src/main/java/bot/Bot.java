@@ -125,7 +125,7 @@ public class Bot extends TelegramLongPollingBot {
             execute(
                     SendMessage
                             .builder()
-                            .text("Enter second number")
+                            .text("Enter second number:")
                             .chatId(message.getChatId().toString())
                             .build()
             );
@@ -136,7 +136,9 @@ public class Bot extends TelegramLongPollingBot {
                 message.getChat().getId().equals(chatId)
         ) {
             numbers.setSecondNumber(Double.parseDouble(message.getText()));
-            double calculated = operationService.calculated(signModeService.getOriginalSign(message.getChat().getId()), numbers.getFirstNumber(), numbers.getSecondNumber());
+            double calculated = operationService.calculated(signModeService.getOriginalSign(
+                    message.getChat().getId()), numbers.getFirstNumber(), numbers.getSecondNumber()
+            );
             execute(
                     SendMessage
                             .builder()
