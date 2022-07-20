@@ -89,6 +89,15 @@ public class Bot extends TelegramLongPollingBot {
                         message.getText().substring(
                                 commandEntity.get().getOffset(), commandEntity.get().getLength()
                         );
+
+                if ("/start".equals(command)) {
+                    execute(SendMessage.builder()
+                            .text("Hello this bot will solve your example, click on the command /arithmetic_operation")
+                            .chatId(message.getChatId().toString())
+                            .build());
+                    return;
+                }
+
                 if ("/arithmetic_operation".equals(command)) {
                     List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
                     ArithmeticSign originalSign = signModeService.getOriginalSign(message.getChatId());
