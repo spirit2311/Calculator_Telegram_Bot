@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 
-public class Bot extends TelegramLongPollingBot {
+public class Bot extends TelegramLongPollingBot implements Runnable {
 
 
     private final SignModeService signModeService = SignModeService.getInstance();
@@ -172,5 +172,10 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         return "5574421631:AAE5cMaotvq_ig6z4_dhiAUCLe2erGmNi_8";
+    }
+
+    @Override
+    public void run() {
+
     }
 }
