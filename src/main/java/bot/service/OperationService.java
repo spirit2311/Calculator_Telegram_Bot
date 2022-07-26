@@ -1,6 +1,7 @@
 package bot.service;
 
 import bot.entity.ArithmeticSign;
+import bot.exception.ZeroDivideException;
 
 public interface OperationService {
 
@@ -8,5 +9,5 @@ public interface OperationService {
         return new ArithmeticOperationService();
     }
 
-    double calculated(ArithmeticSign arithmeticSign , double firstNum, double secondNum);
+    double calculated(ArithmeticSign arithmeticSign , double firstNum, double secondNum) throws ZeroDivideException;
 }

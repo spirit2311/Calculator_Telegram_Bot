@@ -2,6 +2,7 @@ package bot;
 
 import bot.entity.ArithmeticSign;
 import bot.entity.Numbers;
+import bot.exception.ZeroDivideException;
 import bot.service.OperationService;
 import bot.service.SignModeService;
 
@@ -22,7 +23,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 
-public class Bot extends TelegramLongPollingBot implements Runnable {
+public class Bot extends TelegramLongPollingBot {
 
 
     private final SignModeService signModeService = SignModeService.getInstance();
@@ -32,6 +33,8 @@ public class Bot extends TelegramLongPollingBot implements Runnable {
     private final Numbers numbers = new Numbers();
 
     private Long chatId = 0L;
+
+
 
     @Override
 
@@ -58,11 +61,19 @@ public class Bot extends TelegramLongPollingBot implements Runnable {
         String[] param = callbackQuery.getData().split(":");
         String action = param[0];
         ArithmeticSign newArithmetic = ArithmeticSign.valueOf(param[1]);
-        if (newArithmetic.isSignValid(newArithmetic) && Objects.isNull(numbers.getFirstNumber()) && Objects.isNull(numbers.getSecondNumber())) {
+        if (newArithmetic.isSignValid(newArithmetic) &&
+                Objects.isNull(numbers.getFirstNumber()) && Objects.isNull(numbers.getSecondNumber())) {
             execute(
                     SendMessage
                             .builder()
-                            .text("Enter first number")
+                            .text("You have chosen a sign " + newArithmetic.name())
+                            .chatId(message.getChatId().toString())
+                            .build()
+            );
+            execute(
+                    SendMessage
+                            .builder()
+                            .text("Enter first number:")
                             .chatId(message.getChatId().toString())
                             .build()
             );
@@ -105,7 +116,7 @@ public class Bot extends TelegramLongPollingBot implements Runnable {
                         buttons.add(
                                 List.of(
                                         InlineKeyboardButton.builder()
-                                                .text(getSignButton(originalSign, arithmeticSign))
+                                                .text(String.valueOf(arithmeticSign))
                                                 .callbackData("ORIGINAL:" + arithmeticSign)
                                                 .build()));
 
@@ -115,7 +126,7 @@ public class Bot extends TelegramLongPollingBot implements Runnable {
                     numbers.setSecondNumber(null);
                     signModeService.setOriginalSign(message.getChatId(), null);
                     execute(SendMessage.builder()
-                            .text("Select arithmetic sign")
+                            .text("Select arithmetic sign: ")
                             .chatId(message.getChatId().toString())
                             .replyMarkup(InlineKeyboardMarkup.builder().keyboard(buttons).build())
                             .build());
@@ -144,25 +155,35 @@ public class Bot extends TelegramLongPollingBot implements Runnable {
                 Objects.isNull(numbers.getSecondNumber()) &&
                 message.getChat().getId().equals(chatId)
         ) {
-            numbers.setSecondNumber(Double.parseDouble(message.getText()));
-            double calculated = operationService.calculated(signModeService.getOriginalSign(
-                    message.getChat().getId()), numbers.getFirstNumber(), numbers.getSecondNumber()
-            );
-            execute(
-                    SendMessage
-                            .builder()
-                            .text("Result: " + calculated)
-                            .chatId(message.getChatId().toString())
-                            .build()
-            );
+            try {
+
+
+                numbers.setSecondNumber(Double.parseDouble(message.getText()));
+                double calculated = operationService.calculated(signModeService.getOriginalSign(
+                        message.getChat().getId()), numbers.getFirstNumber(), numbers.getSecondNumber()
+                );
+                execute(
+                        SendMessage
+                                .builder()
+                                .text("Result: " + calculated)
+                                .chatId(message.getChatId().toString())
+                                .build()
+                );
+            }catch (ZeroDivideException e){
+                execute(SendMessage.builder()
+                        .text("Oops, you can’t divide by zero, let’s do it again")
+                        .chatId(message.getChatId().toString())
+                        .build());
+            }
+            execute(SendMessage.builder()
+                    .text("If you want to solve another equation, click on the command /arithmetic_operation")
+                    .chatId(message.getChatId().toString())
+                    .build());
             return;
         }
     }
 
-    //TODO галочка при нажатие на кнопку
-    private String getSignButton(ArithmeticSign saved, ArithmeticSign current) {
-        return saved == current ? current + " ✅" : current.name();
-    }
+
 
     @Override
     public String getBotUsername() {
@@ -172,10 +193,5 @@ public class Bot extends TelegramLongPollingBot implements Runnable {
     @Override
     public String getBotToken() {
         return "5574421631:AAE5cMaotvq_ig6z4_dhiAUCLe2erGmNi_8";
-    }
-
-    @Override
-    public void run() {
-
     }
 }

@@ -1,10 +1,16 @@
 package bot.service;
 
 import bot.entity.ArithmeticSign;
+import bot.exception.ZeroDivideException;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 public class ArithmeticOperationService implements OperationService {
+
+    Message message = new Message();
+
     @Override
-    public double calculated(ArithmeticSign sign, double firstNum, double secondNum) {
+    public double calculated(ArithmeticSign sign, double firstNum, double secondNum) throws ZeroDivideException {
         double result = 0;
         switch (sign) {
             case PLUS:
@@ -18,7 +24,8 @@ public class ArithmeticOperationService implements OperationService {
 
             case DIVIDE:
                 if (secondNum == 0) {
-                    return 0;
+                   throw new ZeroDivideException("");
+
                 }
 
                 return firstNum / secondNum;
