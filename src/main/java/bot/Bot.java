@@ -111,7 +111,6 @@ public class Bot extends TelegramLongPollingBot {
 
                 if ("/arithmetic_operation".equals(command)) {
                     List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
-                    ArithmeticSign originalSign = signModeService.getOriginalSign(message.getChatId());
                     for (ArithmeticSign arithmeticSign : ArithmeticSign.values()) {
                         buttons.add(
                                 List.of(
