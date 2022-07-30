@@ -34,10 +34,7 @@ public class Bot extends TelegramLongPollingBot {
 
     private Long chatId = 0L;
 
-
-
     @Override
-
     public void onUpdateReceived(Update update) {
         if (update.hasCallbackQuery()) {
             try {
@@ -118,7 +115,6 @@ public class Bot extends TelegramLongPollingBot {
                                                 .text(String.valueOf(arithmeticSign))
                                                 .callbackData("ORIGINAL:" + arithmeticSign)
                                                 .build()));
-
                     }
                     chatId = message.getChatId();
                     numbers.setFirstNumber(null);
