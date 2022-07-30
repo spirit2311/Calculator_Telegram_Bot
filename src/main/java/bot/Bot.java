@@ -17,10 +17,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 
 public class Bot extends TelegramLongPollingBot {
@@ -110,7 +107,7 @@ public class Bot extends TelegramLongPollingBot {
                     List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
                     for (ArithmeticSign arithmeticSign : ArithmeticSign.values()) {
                         buttons.add(
-                                List.of(
+                                Collections.singletonList(
                                         InlineKeyboardButton.builder()
                                                 .text(String.valueOf(arithmeticSign))
                                                 .callbackData("ORIGINAL:" + arithmeticSign)
