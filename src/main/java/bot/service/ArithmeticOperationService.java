@@ -2,12 +2,9 @@ package bot.service;
 
 import bot.entity.ArithmeticSign;
 import bot.exception.ZeroDivideException;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
+
 
 public class ArithmeticOperationService implements OperationService {
-
-    Message message = new Message();
 
     @Override
     public double calculated(ArithmeticSign sign, double firstNum, double secondNum) throws ZeroDivideException {
