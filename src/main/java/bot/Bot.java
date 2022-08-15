@@ -165,12 +165,6 @@ public class Bot extends TelegramLongPollingBot {
                         .chatId(message.getChatId().toString())
                         .build());
             }
-//            catch (IllegalFormatException e){
-//                execute(SendMessage.builder()
-//                        .text("No! This is not a number, pleas enter number!")
-//                        .chatId(message.getChatId().toString())
-//                        .build());
-//            }
             execute(SendMessage.builder()
                     .text("If you want to solve another equation, click on the command /arithmetic_operation")
                     .chatId(message.getChatId().toString())
