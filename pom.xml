@@ -23,9 +23,6 @@
                                     <artifactId>webapp-runner</artifactId>
                                     <version>9.0.52.1</version>
                                     <destFileName>webapp-runner.jar</destFileName>
-                                    <id>copy-dependencies</id>
-                                    <phase>package</phase>
-                                    <goals><goal>copy-dependencies</goal></goals>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
