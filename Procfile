@@ -1,1 +1,1 @@
-web: java -cp target/generated-sources/:target/dependency/* Main
+worker: sh target/generated-sources/Main
