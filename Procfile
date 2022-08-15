@@ -1,1 +1,1 @@
-worker: sh target/bin/workerBot
+web: java -cp target/classes/:target/dependency/* Main
