@@ -133,14 +133,14 @@ public class Bot extends TelegramLongPollingBot {
                 Objects.isNull(numbers.getSecondNumber()) &&
                 message.getChat().getId().equals(chatId)
         ) {
-            numbers.setFirstNumber(Double.parseDouble(message.getText()));
-            execute(
-                    SendMessage
-                            .builder()
-                            .text("Enter second number:")
-                            .chatId(message.getChatId().toString())
-                            .build()
-            );
+                numbers.setFirstNumber(Double.parseDouble(message.getText()));
+                execute(
+                        SendMessage
+                                .builder()
+                                .text("Enter second number:")
+                                .chatId(message.getChatId().toString())
+                                .build()
+                );
         } else if (message.hasText() &&
                 numbers.isNumeric(message.getText()) &&
                 Objects.nonNull(numbers.getFirstNumber()) &&
@@ -148,8 +148,6 @@ public class Bot extends TelegramLongPollingBot {
                 message.getChat().getId().equals(chatId)
         ) {
             try {
-
-
                 numbers.setSecondNumber(Double.parseDouble(message.getText()));
                 double calculated = operationService.calculated(signModeService.getOriginalSign(
                         message.getChat().getId()), numbers.getFirstNumber(), numbers.getSecondNumber()
@@ -167,6 +165,12 @@ public class Bot extends TelegramLongPollingBot {
                         .chatId(message.getChatId().toString())
                         .build());
             }
+//            catch (IllegalFormatException e){
+//                execute(SendMessage.builder()
+//                        .text("No! This is not a number, pleas enter number!")
+//                        .chatId(message.getChatId().toString())
+//                        .build());
+//            }
             execute(SendMessage.builder()
                     .text("If you want to solve another equation, click on the command /arithmetic_operation")
                     .chatId(message.getChatId().toString())
