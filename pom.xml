@@ -10,22 +10,24 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <configuration>
+                    <assembleDirectory>target</assembleDirectory>
+                    <programs>
+                        <program>
+                            <mainClass>main.java.Main</mainClass>
+                            <name>workerBot</name>
+                        </program>
+                    </programs>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals><goal>copy</goal></goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.heroku</groupId>
-                                    <artifactId>webapp-runner</artifactId>
-                                    <version>9.0.52.1</version>
-                                    <destFileName>webapp-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

@@ -1,1 +1,1 @@
-worker: java -jar target/Main.java
+worker: sh target/bin/workerBot
