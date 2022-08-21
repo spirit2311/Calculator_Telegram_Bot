@@ -1,1 +1,1 @@
-worker: sh target/generated-sources/Main
+web: npm start
