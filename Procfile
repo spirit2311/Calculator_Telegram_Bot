@@ -1,1 +1,1 @@
-web: npm start
+worker: java -jar target/Main.java
