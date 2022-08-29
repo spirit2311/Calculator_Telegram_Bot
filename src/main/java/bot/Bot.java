@@ -79,8 +79,6 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    //TODO Метод который создает и вызывает кнопки при нажатии на команду /arithmetic_operation
-    // Eshe raz uvizhu russkij text - otkluchu gaz i skazhu vsem chto ti pidor. Nikakogo rus texta v code
     @SneakyThrows
     private void handleMessage(Message message) throws TelegramApiException {
         if (message.hasText() && message.hasEntities()) {
@@ -133,14 +131,14 @@ public class Bot extends TelegramLongPollingBot {
                 Objects.isNull(numbers.getSecondNumber()) &&
                 message.getChat().getId().equals(chatId)
         ) {
-                numbers.setFirstNumber(Double.parseDouble(message.getText()));
-                execute(
-                        SendMessage
-                                .builder()
-                                .text("Enter second number:")
-                                .chatId(message.getChatId().toString())
-                                .build()
-                );
+            numbers.setFirstNumber(Double.parseDouble(message.getText()));
+            execute(
+                    SendMessage
+                            .builder()
+                            .text("Enter second number:")
+                            .chatId(message.getChatId().toString())
+                            .build()
+            );
         } else if (message.hasText() &&
                 numbers.isNumeric(message.getText()) &&
                 Objects.nonNull(numbers.getFirstNumber()) &&
@@ -159,7 +157,7 @@ public class Bot extends TelegramLongPollingBot {
                                 .chatId(message.getChatId().toString())
                                 .build()
                 );
-            }catch (ZeroDivideException e){
+            } catch (ZeroDivideException e) {
                 execute(SendMessage.builder()
                         .text("Oops, you can’t divide by zero, let’s do it again")
                         .chatId(message.getChatId().toString())
@@ -172,7 +170,6 @@ public class Bot extends TelegramLongPollingBot {
             return;
         }
     }
-
 
 
     @Override
